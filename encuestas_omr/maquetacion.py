@@ -366,7 +366,8 @@ class Maquetador:
                     y_linea = y_txt + _subida(self.t) + (len(ls) - 1) * lh + 0.8
                     ops.append(op_linea(x_linea, y_linea, X_DER, y_linea, 0.5, 0.45))
                     zonas.append({"pregunta": e.id, "tipo": "especifique", "opcion": i,
-                                  "rect": [x_linea - 1, cy - paso / 2 - 1.5, X_DER + 1, y_linea + 2.0]})
+                                  "rect": [x_linea - 1, y_linea - 6.5, X_DER + 1, y_linea + 2.0],
+                                  "lineas": [y_linea]})
             campo = {"clave": e.id, "pregunta": e.id, "tipo": e.tipo, "fila": None, "direccion": "vertical",
                      "cx": x_cas + CASILLA_MM / 2, "cy": cy0, "paso": paso, "n": len(e.opciones)}
             y = cy0 + (len(e.opciones) - 1) * paso + CASILLA_MM / 2 + 1.5
@@ -499,7 +500,8 @@ class Maquetador:
         for k in range(1, e.lineas + 1):
             yl = y + k * 8.0
             ops.append(op_linea(x0 + 3, yl, X_DER - 3, yl, 0.3, 0.78))
-        zona = {"pregunta": e.id, "tipo": "texto_libre", "opcion": None, "rect": [x0, y, X_DER, y + alto_caja]}
+        zona = {"pregunta": e.id, "tipo": "texto_libre", "opcion": None, "rect": [x0, y, X_DER, y + alto_caja],
+                "lineas": [y + k * 8.0 for k in range(1, e.lineas + 1)]}
         return Bloque(alto=y + alto_caja + 1.0, ops=ops, zonas=[zona])
 
     def _b_despedida(self) -> Bloque:
@@ -566,7 +568,10 @@ class Maquetador:
             pag.ops.append(op)
         for z in b.zonas:
             x0, ya, x1, yb = z["rect"]
-            pag.zonas.append({**z, "rect": [x0, ya + y0, x1, yb + y0]})
+            nueva = {**z, "rect": [x0, ya + y0, x1, yb + y0]}
+            if "lineas" in z:
+                nueva["lineas"] = [round(v + y0, 3) for v in z["lineas"]]
+            pag.zonas.append(nueva)
         for c in b.campos:
             campo = _campo_absoluto(c, y0)
             pag.campos.append(campo)
@@ -600,8 +605,10 @@ def _campo_absoluto(c: dict, y0: float) -> dict:
 
 
 def calcular_huella(maqueta: Maqueta) -> str:
+    """Identificador de la versión impresa. Solo depende de lo que se imprime (textos y casillas),
+    no de ajustes de análisis como el tipo de gráfico o las respuestas favorables."""
     datos = json.dumps(
-        {"e": maqueta.encuesta, "p": [(p.ops, p.campos) for p in maqueta.paginas]},
+        {"id": maqueta.encuesta.get("id"), "p": [(p.ops, p.campos, p.zonas) for p in maqueta.paginas]},
         sort_keys=True, ensure_ascii=False,
     )
     return hashlib.sha1(datos.encode("utf-8")).hexdigest()[:8]

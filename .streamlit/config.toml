@@ -1,0 +1,15 @@
+[server]
+# Escaneos grandes: hasta 1 GB por subida
+maxUploadSize = 1000
+headless = false
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+primaryColor = "#1c5cab"

@@ -30,6 +30,7 @@ from .motor_omrchecker import PlantillaPagina
 TINTA_VACIA = 0.045  # por debajo: casilla vacía
 TINTA_MARCA = 0.11  # por encima: casilla marcada con seguridad
 TINTA_RELLENO = 0.80  # por encima: casilla rellena (anulada si hay otra marcada)
+MIN_TINTA_TEXTO = 90  # píxeles de escritura (≈1,4 mm²) para considerar que hay algo escrito
 
 DPI_LECTURA = 200
 _MARGEN_MEDIDA = (CASILLA_MM * PX_MM - MEDIDA_PX) / 2
@@ -233,14 +234,21 @@ def corregir_fondo(tintas: dict[str, list[float]]) -> dict[str, list[float]]:
     return {k: [round(max(0.0, (t - fondo) / (1 - fondo)), 4) for t in v] for k, v in tintas.items()}
 
 
-def tinta_texto(pagina: np.ndarray, rect_mm: list[float], umbral: float) -> int:
-    """Píxeles de escritura a mano en una zona de texto libre (sin contar líneas ni bordes impresos)."""
+def tinta_texto(pagina: np.ndarray, rect_mm: list[float], umbral: float, lineas_mm: list[float] = ()) -> int:
+    """Píxeles de escritura a mano en una zona de texto libre (sin contar líneas ni bordes impresos).
+
+    ``lineas_mm``: posición (mm) de las líneas impresas para escribir, que se tapan antes de contar.
+    """
     x0, y0, x1, y1 = (int(round(v * PX_MM)) for v in rect_mm)
     m = 10
-    zona = pagina[max(0, y0 + m): y1 - m, max(0, x0 + m): x1 - m]
+    ya, xa = max(0, y0 + m), max(0, x0 + m)
+    zona = pagina[ya: y1 - m, xa: x1 - m]
     if zona.size == 0:
         return 0
     tinta = (zona < umbral).astype(np.uint8)
+    for y_mm in lineas_mm:  # líneas impresas conocidas: se tapa una franja de ±1 mm
+        yl = int(round(y_mm * PX_MM)) - ya
+        tinta[max(0, yl - 8): max(0, yl + 9), :] = 0
     horiz = cv2.morphologyEx(tinta, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (70, 1)))
     vert = cv2.morphologyEx(tinta, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (1, 70)))
     lineas = cv2.dilate(cv2.bitwise_or(horiz, vert), np.ones((5, 5), np.uint8))
@@ -370,11 +378,12 @@ class Lector:
             res.campos.append(ResultadoCampo(
                 clave=c["clave"], pregunta=c["pregunta"], tipo=c["tipo"], fila=c["fila"], omr=omr, tinta=tinta,
                 seleccion=seleccion, estado=estado, motivo=motivo, anuladas=anuladas, desplazamiento=desp))
-        umbral_texto = papel * 0.62
+        umbral_texto = papel * 0.82
         for z in pag.zonas:
             if z["tipo"] in ("texto_libre", "especifique"):
-                n = tinta_texto(normal, z["rect"], umbral_texto)
-                area = (z["rect"][2] - z["rect"][0]) * (z["rect"][3] - z["rect"][1]) * PX_MM * PX_MM
-                escrito = n > max(120, 0.0025 * area)
+                n = tinta_texto(normal, z["rect"], umbral_texto, z.get("lineas", ()))
+                # Umbral absoluto: una palabra corta en un recuadro grande también cuenta
+                # (las líneas impresas y las motas ya se han descontado).
+                escrito = n > MIN_TINTA_TEXTO
                 res.textos.append(ResultadoTexto(z["pregunta"], z["tipo"], z.get("opcion"), escrito, n))
         return res, normal
