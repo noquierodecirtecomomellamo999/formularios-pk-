@@ -199,15 +199,19 @@ def generar_informe(almacen: Almacen, encuesta_id: str, destino: Path, textos: d
     historia += [tf, Spacer(1, 2 * mm)]
 
     textos_manuscritos = []
+    pendientes: list = []
     for e in enc.elementos:
         if e.tipo == "seccion":
-            historia.append(_p(e.etiqueta, est["seccion"]))
+            pendientes.append(_p(e.etiqueta, est["seccion"]))
             continue
         if e.tipo == "texto":
-            historia.append(_p(e.etiqueta, est["pregunta"]))
+            pendientes.append(_p(e.etiqueta, est["pregunta"]))
             continue
         r = por_id[e.id]
-        bloque = [_p(e.etiqueta, est["pregunta"])]
+        # Los títulos de sección (y textos) van en el mismo bloque que la pregunta siguiente,
+        # para que nunca queden solos al final de una página.
+        bloque = pendientes + [_p(e.etiqueta, est["pregunta"])]
+        pendientes = []
         if e.tipo == "abierta":
             if r.textos:
                 bloque.append(ListFlowable([ListItem(_p(x, est["base"]), leftIndent=8) for x in r.textos],
@@ -240,6 +244,8 @@ def generar_informe(almacen: Almacen, encuesta_id: str, destino: Path, textos: d
         if r.n_dudosas:
             bloque.append(_p(f"Incluye {r.n_dudosas} respuesta(s) dudosa(s) sin revisar.", est["nota"]))
         historia.append(KeepTogether(bloque))
+
+    historia += pendientes  # (por si la encuesta termina en un título)
 
     # Anexo: comentarios escritos a mano sin transcribir
     if t.get("incluir_recortes", True) and textos_manuscritos:
