@@ -183,8 +183,7 @@ def _dialogo_borrar(eid):
                "Se mueve a la carpeta `papelera` dentro de los datos, por si hubiera que recuperarla.")
     if st.checkbox("Sí, quiero borrarla") and st.button("Borrar", type="primary"):
         alm.borrar(eid)
-        st.session_state.pop("encuesta_id", None)
-        st.session_state.pop("sel_encuesta", None)
+        comun.seleccionar(None)
         st.rerun()
 
 

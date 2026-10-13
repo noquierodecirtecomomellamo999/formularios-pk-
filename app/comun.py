@@ -28,10 +28,12 @@ def nombre_encuesta(d: dict) -> str:
     return f"{d['titulo']} · {d['subtitulo']}" if d.get("subtitulo") else d["titulo"]
 
 
-def seleccionar(id_: str) -> None:
-    """Cambia la encuesta activa (para usar antes de st.rerun o en un callback)."""
-    st.session_state["encuesta_id"] = id_
-    st.session_state["sel_encuesta"] = id_
+def seleccionar(id_: str | None) -> None:
+    """Cambia la encuesta activa en la próxima ejecución (usar antes de st.rerun).
+
+    No se toca directamente el selector lateral porque ya está dibujado en esta ejecución.
+    """
+    st.session_state["_encuesta_pendiente"] = id_ or ""
 
 
 def selector_encuesta() -> str | None:
@@ -41,6 +43,10 @@ def selector_encuesta() -> str | None:
         return None
     ids = [x["id"] for x in lista]
     nombres = {x["id"]: nombre_encuesta(x) for x in lista}
+    if "_encuesta_pendiente" in st.session_state:
+        pendiente = st.session_state.pop("_encuesta_pendiente")
+        st.session_state["encuesta_id"] = pendiente
+        st.session_state["sel_encuesta"] = pendiente if pendiente in ids else ids[0]
     if st.session_state.get("sel_encuesta") not in ids:
         st.session_state["sel_encuesta"] = st.session_state.get("encuesta_id") if \
             st.session_state.get("encuesta_id") in ids else ids[0]

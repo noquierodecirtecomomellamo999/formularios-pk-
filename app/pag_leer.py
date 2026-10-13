@@ -82,7 +82,7 @@ def pagina():
     with st.expander("🧪 Probar sin imprimir (datos inventados)"):
         st.caption("Crea cuestionarios rellenados al azar y 'escaneados' por ordenador para ver cómo funciona todo "
                    "el proceso. Después borra ese lote para que no cuente en los resultados.")
-        n = st.number_input("Cuestionarios de prueba", 3, 60, 10)
+        n = st.number_input("Cuestionarios de prueba", 3, 40, 10)
         if st.button("Crear y leer escaneo de prueba"):
             with st.spinner("Creando hojas de prueba…"):
                 lote = _crear_prueba(alm, eid, int(n))

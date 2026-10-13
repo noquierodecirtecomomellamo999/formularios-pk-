@@ -249,6 +249,8 @@ def validar(enc: Encuesta) -> list[str]:
     errores: list[str] = []
     if not enc.titulo.strip():
         errores.append("La encuesta no tiene título.")
+    if not enc.preguntas:
+        errores.append("La encuesta todavía no tiene preguntas.")
     vistos: set[str] = set()
     for i, e in enumerate(enc.elementos, start=1):
         nombre = f"Elemento {i} ({e.etiqueta[:40] or TIPOS.get(e.tipo, e.tipo)})"
