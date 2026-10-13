@@ -1,3 +1,4 @@
 # Los .bat de Windows necesitan finales de línea CRLF
 *.bat text eol=crlf
 *.sh text eol=lf
+*.iss text eol=crlf

@@ -15,17 +15,37 @@ abierto con licencia MIT.
 
 ---
 
-## Instalación en Windows
+## Instalación en Windows (lo normal)
 
-1. **Instala Python** (solo la primera vez):
-   - Descárgalo de <https://www.python.org/downloads/> (versión 3.10 o posterior).
-   - Al instalarlo, **marca la casilla «Add python.exe to PATH»**.
-2. **Descarga este programa**:
-   - En GitHub, pulsa *Code → Download ZIP* y descomprímelo, por ejemplo en `Documentos\Encuestas`.
-3. Haz doble clic en **`instalar.bat`**. La primera vez tarda unos minutos porque descarga los componentes.
-4. Para usarlo, haz doble clic en **`iniciar.bat`**:
-   - El programa se abre en el navegador (Chrome, Edge…).
-   - Deja abierta la ventana negra mientras lo uses. Para cerrar el programa, cierra esa ventana.
+1. Descarga el instalador:
+   **[Instalar-Encuestas-CIRENC.exe](https://github.com/noquierodecirtecomomellamo999/formularios-pk-/releases/latest/download/Instalar-Encuestas-CIRENC.exe)**
+2. Haz doble clic en él.
+   - Si aparece «Windows protegió su PC», pulsa **Más información → Ejecutar de todas formas**. Sale porque el programa no está firmado por una empresa de software.
+   - Deja marcado **«Crear un icono en el escritorio»** y pulsa **Instalar**.
+3. Ábrelo con el icono **Encuestas CIRENC** del escritorio. Se abre en el navegador.
+
+Cosas que conviene saber:
+- **No hace falta instalar nada más**: el instalador lleva todo lo necesario, Python incluido.
+- No necesita internet ni permisos de administrador.
+- Los datos se guardan en **Documentos › Encuestas CIRENC**.
+- Para cerrarlo, usa el botón **«Cerrar el programa»** del menú de la izquierda.
+
+**Guía rápida.** Tienes una guía rápida para imprimir:
+- en el menú Inicio, como «Guía rápida de Encuestas CIRENC»;
+- o descargándola aquí: [Guia-rapida-Encuestas-CIRENC.pdf](https://github.com/noquierodecirtecomomellamo999/formularios-pk-/releases/latest/download/Guia-rapida-Encuestas-CIRENC.pdf).
+
+**Versión portable (sin instalar).** También hay una versión que no se instala:
+[Encuestas-CIRENC-portable.zip](https://github.com/noquierodecirtecomomellamo999/formularios-pk-/releases/latest/download/Encuestas-CIRENC-portable.zip).
+Se descomprime y se abre con «Abrir Encuestas CIRENC.bat».
+
+> El instalador se construye y se prueba solo, en un Windows de GitHub (instalar, abrir, leer hojas, desinstalar), cada vez que se cambia el programa. Ver [`.github/workflows/instalador.yml`](.github/workflows/instalador.yml).
+
+### Instalar desde el código (para quien vaya a modificar el programa)
+
+1. **Instala Python** 3.10 o posterior desde <https://www.python.org/downloads/>, marcando **«Add python.exe to PATH»**.
+2. Descarga el código: en GitHub, *Code → Download ZIP*, y descomprímelo.
+3. Haz doble clic en **`instalar.bat`**. La primera vez tarda unos minutos.
+4. Ábrelo con **`iniciar.bat`**.
 
 > En Linux o macOS: `./iniciar.sh`.
 
@@ -114,14 +134,18 @@ En las escalas salen la media, la mediana y el % que puntúa 8 o más; el umbral
 
 ## Dónde se guardan los datos
 
-Todo se guarda en la carpeta **`datos`**, dentro de la carpeta del programa:
+En Windows, todo se guarda en **Documentos › Encuestas CIRENC**:
 - las encuestas;
 - las versiones impresas;
 - los escaneos;
 - las revisiones;
 - los informes.
 
-Para hacer una copia de seguridad basta con copiar esa carpeta. Las encuestas borradas van a `datos/papelera`.
+En el programa, el botón «Abrir la carpeta de datos» la abre.
+
+- **Copia de seguridad**: basta con copiar esa carpeta.
+- **Actualizar o desinstalar el programa no la borra.**
+- Las encuestas borradas van a la subcarpeta `papelera`.
 
 Se puede usar otra carpeta con la variable de entorno `ENCUESTAS_OMR_DATOS`.
 
@@ -157,7 +181,9 @@ python -m streamlit run app/inicio.py                  # la aplicación
 |---|---|
 | `encuestas_omr/` | Modelo, maquetación, PDF, lector OMR, análisis, gráficos, informe |
 | `app/` | Interfaz (Streamlit) |
-| `ejemplos/` | Encuestas de ejemplo |
+| `ejemplos/` | Encuestas de ejemplo y logo |
+| `lanzador.py` | Abre el programa (lo usan el icono del escritorio y `iniciar.bat`) |
+| `instalador/` | Construcción del instalador de Windows, prueba del paquete y guía rápida |
 | `tests/` | Pruebas (con un simulador que rellena y «escanea» hojas) |
 | `third_party/OMRChecker/` | Copia sin modificar de OMRChecker (licencia MIT) |
 

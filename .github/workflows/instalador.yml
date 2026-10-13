@@ -1,0 +1,95 @@
+name: Instalador de Windows
+
+# Construye el instalador «Instalar-Encuestas-CIRENC.exe» (con Python incluido) y la versión
+# portable en un Windows de GitHub, los prueba de verdad (instalar, abrir, leer hojas, desinstalar)
+# y los publica en «Releases» con un enlace de descarga fijo.
+
+on:
+  push:
+    branches: [claude/survey-automation-omr-aii715, main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Construir el programa con Python incluido
+        run: python instalador/construir.py
+
+      - name: Probar el programa empaquetado (lectura de hojas, informe, Excel, Word)
+        run: '& "dist\Encuestas CIRENC\python\python.exe" instalador\prueba_paquete.py'
+
+      - name: Crear el instalador (Inno Setup)
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup --no-progress -y; }
+          $version = (Get-Content "dist\Encuestas CIRENC\version.txt").Trim()
+          & $iscc "/DVersion=$version" instalador\encuestas_cirenc.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Get-ChildItem dist | Format-Table Name, Length
+
+      - name: Probar el instalador (instalar, abrir, desinstalar)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Start-Process "dist\Instalar-Encuestas-CIRENC.exe" -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART","/TASKS=escritorio" -Wait
+          $app = Join-Path $env:LOCALAPPDATA "Programs\Encuestas CIRENC"
+          foreach ($f in "lanzador.py", "python\pythonw.exe", "Guía rápida.pdf", "recursos\icono.ico") {
+            if (-not (Test-Path (Join-Path $app $f))) { throw "Falta $f en la instalación" }
+          }
+          $escritorio = [Environment]::GetFolderPath("Desktop")
+          if (-not (Test-Path (Join-Path $escritorio "Encuestas CIRENC.lnk"))) { throw "Falta el icono del escritorio" }
+          # Abrir como lo haría el icono (pythonw, sin consola) y esperar a que responda
+          Start-Process (Join-Path $app "python\pythonw.exe") -ArgumentList "`"$app\lanzador.py`"","--sin-navegador" -WorkingDirectory $app
+          $ok = $false
+          for ($i = 0; $i -lt 60; $i++) {
+            try { if ((Invoke-WebRequest "http://127.0.0.1:8501/_stcore/health" -UseBasicParsing -TimeoutSec 3).StatusCode -eq 200) { $ok = $true; break } } catch {}
+            Start-Sleep 2
+          }
+          if (-not $ok) { Get-Content (Join-Path $env:LOCALAPPDATA "Encuestas CIRENC\registro.txt") -ErrorAction SilentlyContinue; throw "El programa instalado no responde" }
+          Write-Host "El programa instalado se abre y responde"
+          # Desinstalar (cierra el programa abierto)
+          Start-Process (Join-Path $app "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait
+          Start-Sleep 3
+          if (Test-Path (Join-Path $app "lanzador.py")) { throw "La desinstalación no ha quitado el programa" }
+          Write-Host "Desinstalado correctamente"
+
+      - name: Guardar el instalador y la versión portable
+        uses: actions/upload-artifact@v4
+        with:
+          name: Encuestas-CIRENC-Windows
+          path: |
+            dist/Instalar-Encuestas-CIRENC.exe
+            dist/Encuestas-CIRENC-portable.zip
+            dist/Guia-rapida-Encuestas-CIRENC.pdf
+          retention-days: 90
+
+      - name: Publicar en Releases (al crear una etiqueta vX.Y.Z)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Encuestas CIRENC ${{ github.ref_name }}
+          body: |
+            **Para instalar en Windows:** descarga `Instalar-Encuestas-CIRENC.exe` y haz doble clic.
+            No necesita internet ni permisos de administrador. La guía rápida (`Guia-rapida-Encuestas-CIRENC.pdf`) explica todo el uso.
+
+            Si Windows muestra «Windows protegió su PC», pulsa «Más información» → «Ejecutar de todas formas».
+
+            `Encuestas-CIRENC-portable.zip` es la misma versión sin instalador (descomprimir y abrir
+            «Abrir Encuestas CIRENC.bat»).
+          files: |
+            dist/Instalar-Encuestas-CIRENC.exe
+            dist/Encuestas-CIRENC-portable.zip
+            dist/Guia-rapida-Encuestas-CIRENC.pdf

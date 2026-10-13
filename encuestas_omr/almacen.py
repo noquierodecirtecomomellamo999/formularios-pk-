@@ -33,8 +33,40 @@ RAIZ_PROGRAMA = Path(__file__).resolve().parent.parent
 CARPETA_EJEMPLOS = RAIZ_PROGRAMA / "ejemplos"
 
 
+NOMBRE_CARPETA_DATOS = "Encuestas CIRENC"
+
+
+def _documentos_windows() -> Path:
+    """Carpeta «Documentos» real del usuario (también si está en OneDrive)."""
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        buf = ctypes.create_unicode_buffer(wintypes.MAX_PATH)
+        if ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf) == 0 and buf.value:  # 5 = Mis documentos
+            return Path(buf.value)
+    except Exception:
+        pass
+    return Path.home() / "Documents"
+
+
 def carpeta_datos_por_defecto() -> Path:
-    return Path(os.environ.get("ENCUESTAS_OMR_DATOS", RAIZ_PROGRAMA / "datos"))
+    """Dónde se guardan las encuestas, escaneos y resultados.
+
+    1. La variable de entorno ``ENCUESTAS_OMR_DATOS``, si existe.
+    2. Una carpeta ``datos`` junto al programa, si ya existe (instalaciones antiguas).
+    3. En Windows, ``Documentos\\Encuestas CIRENC`` (fácil de encontrar y de copiar, y no se
+       pierde al actualizar o desinstalar el programa).
+    4. En otros sistemas, ``datos`` junto al programa.
+    """
+    if os.environ.get("ENCUESTAS_OMR_DATOS"):
+        return Path(os.environ["ENCUESTAS_OMR_DATOS"])
+    junto_al_programa = RAIZ_PROGRAMA / "datos"
+    if junto_al_programa.exists():
+        return junto_al_programa
+    if os.name == "nt":
+        return _documentos_windows() / NOMBRE_CARPETA_DATOS
+    return junto_al_programa
 
 
 def _leer_json(ruta: Path, por_defecto):

@@ -7,4 +7,4 @@ if [ ! -x .venv/bin/python ]; then
     .venv/bin/python -m pip install --upgrade pip
     .venv/bin/python -m pip install -r requirements.txt
 fi
-exec .venv/bin/python -m streamlit run app/inicio.py --browser.gatherUsageStats false
+exec .venv/bin/python lanzador.py

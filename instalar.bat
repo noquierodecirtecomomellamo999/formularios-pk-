@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 >nul
-title Instalar Encuestas OMR
+title Instalar Encuestas CIRENC
 cd /d "%~dp0"
 echo.
-echo  === Instalación de Encuestas OMR ===
+echo  === Instalación de Encuestas CIRENC ===
 echo.
 
 set "PY="

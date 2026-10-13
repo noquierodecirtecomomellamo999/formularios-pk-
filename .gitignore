@@ -12,3 +12,7 @@ datos/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Instalador y versión portable (se construyen en GitHub Actions)
+dist/
+build/

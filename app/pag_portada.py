@@ -21,8 +21,14 @@ def pagina():
     for col, (ruta, icono, titulo, texto) in zip(cols, pasos):
         with col:
             with st.container(border=True):
-                st.page_link(comun.PAGINAS[ruta], label=titulo, icon=icono, width="stretch")
+                st.markdown(f"**{icono} {titulo}**")
                 st.caption(texto)
+                st.page_link(comun.PAGINAS[ruta], label="Abrir", icon="➡️")
+
+    guia = comun.RAIZ / "Guía rápida.pdf"  # incluida en la versión instalada
+    if guia.exists():
+        st.download_button("📘 Guía rápida (PDF para imprimir)", guia.read_bytes(),
+                           file_name="Guía rápida - Encuestas CIRENC.pdf", mime="application/pdf")
 
     activa = comun.encuesta_activa()
     if not activa:
