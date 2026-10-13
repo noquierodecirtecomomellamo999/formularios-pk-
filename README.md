@@ -190,3 +190,9 @@ python -m streamlit run app/inicio.py                  # la aplicación
 **Código de terceros**
 - OMRChecker (MIT): © Udayraj Deshmukh y colaboradores.
 - Las fuentes DejaVu vienen incluidas con matplotlib.
+
+**Publicar una versión nueva del instalador**
+1. Cambia el número en `encuestas_omr/__init__.py`.
+2. En GitHub: *Actions → Instalador de Windows → Run workflow*.
+
+El instalador se construye, se prueba y se publica en *Releases*. Los enlaces de descarga de arriba apuntan siempre a la última versión.
