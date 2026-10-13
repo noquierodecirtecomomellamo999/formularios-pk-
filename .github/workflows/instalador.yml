@@ -17,9 +17,9 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
           cache: pip
@@ -62,8 +62,10 @@ jobs:
           Write-Host "El programa instalado se abre y responde"
           # Desinstalar (cierra el programa abierto)
           Start-Process (Join-Path $app "unins000.exe") -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait
-          Start-Sleep 3
+          # (el desinstalador se relanza desde una carpeta temporal: se espera a que termine)
+          for ($i = 0; $i -lt 60 -and (Test-Path (Join-Path $app "lanzador.py")); $i++) { Start-Sleep 1 }
           if (Test-Path (Join-Path $app "lanzador.py")) { throw "La desinstalación no ha quitado el programa" }
+          if (Test-Path (Join-Path $escritorio "Encuestas CIRENC.lnk")) { throw "Queda el icono del escritorio" }
           Write-Host "Desinstalado correctamente"
 
       - name: Guardar el instalador y la versión portable
