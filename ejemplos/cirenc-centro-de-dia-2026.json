@@ -1,0 +1,326 @@
+{
+  "formato": "encuesta-omr/1",
+  "id": "cirenc-centro-de-dia-2026",
+  "titulo": "Cuestionario de satisfacción del CIRENC",
+  "subtitulo": "Programa Centro de Día · Año 2026",
+  "introduccion": "Nuestro propósito es ir mejorando cada año la atención que dispensamos en el Centro. Para ello es fundamental que evaluemos nuestro trabajo y conozcamos su opinión sobre distintos aspectos.",
+  "instrucciones": "Marque con una X la casilla de la respuesta elegida, dentro del cuadro. Puede usar bolígrafo o lápiz oscuro. Si se equivoca, rellene por completo la casilla equivocada y marque con una X la correcta.",
+  "mostrar_fecha": true,
+  "cabecera": {
+    "lineas_izquierda": [
+      "Asociación de Parkinson de La Roda CIRENC",
+      "Centro Integral de Rehabilitación de Enfermos Neurológicos Crónicos",
+      "Avda. Mediterráneo, Nº 2 · La Roda, Albacete · CIF: G02337814",
+      "Tel./Fax: 967 440 404 · correo@parkinsonlaroda.com"
+    ],
+    "lineas_derecha": [],
+    "logos": [
+      "logo_asociacion.png"
+    ]
+  },
+  "pie": "www.parkinsonlaroda.com",
+  "despedida": "Muchas gracias por su tiempo y confianza",
+  "tamano_letra": 11.0,
+  "elementos": [
+    {
+      "tipo": "seccion",
+      "id": "s1",
+      "texto": "1. Bienvenida y ambiente del Centro"
+    },
+    {
+      "tipo": "unica",
+      "id": "p1",
+      "numero": "1.1.",
+      "texto": "¿Cómo se siente acogido/a al llegar al Centro?",
+      "opciones": [
+        "Muy bien",
+        "Bien",
+        "Regular",
+        "Mal"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p2",
+      "numero": "1.2.",
+      "texto": "¿Cómo valora el ambiente general (trato, compañerismo, clima de convivencia)?",
+      "opciones": [
+        "Muy positivo",
+        "Bastante positivo",
+        "Regular",
+        "Negativo"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "seccion",
+      "id": "s2",
+      "texto": "2. Comunicación y participación"
+    },
+    {
+      "tipo": "unica",
+      "id": "p3",
+      "numero": "2.1.",
+      "texto": "¿Recibe información clara sobre las actividades, horarios y cambios en el Centro?",
+      "opciones": [
+        "Siempre",
+        "Casi siempre",
+        "Algunas veces",
+        "Nunca"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p4",
+      "numero": "2.2.",
+      "texto": "¿Se siente escuchado/a cuando comparte sus opiniones o sugerencias?",
+      "opciones": [
+        "Siempre",
+        "Muchas veces",
+        "Pocas veces",
+        "Nunca"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p5",
+      "numero": "2.3.",
+      "texto": "¿Le gustaría participar más en la planificación de actividades del Centro?",
+      "opciones": [
+        "Sí",
+        "No",
+        "No lo sé"
+      ],
+      "favorables": [
+        0
+      ]
+    },
+    {
+      "tipo": "seccion",
+      "id": "s3",
+      "texto": "3. Atención profesional"
+    },
+    {
+      "tipo": "unica",
+      "id": "p6",
+      "numero": "3.1.",
+      "texto": "¿Cómo valora el trato humano y cercano de los profesionales?",
+      "opciones": [
+        "Excelente",
+        "Bueno",
+        "Regular",
+        "Deficiente"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p7",
+      "numero": "3.2.",
+      "texto": "¿Cómo valora la atención que recibe en relación a sus necesidades personales?",
+      "opciones": [
+        "Muy adecuada",
+        "Bastante adecuada",
+        "Regular",
+        "Poco adecuada"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "seccion",
+      "id": "s4",
+      "texto": "4. Actividades y servicios"
+    },
+    {
+      "tipo": "unica",
+      "id": "p8",
+      "numero": "4.1.",
+      "texto": "¿Las actividades le resultan motivadoras e interesantes?",
+      "opciones": [
+        "Sí, mucho",
+        "Bastante",
+        "Algo",
+        "Poco"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p9",
+      "numero": "4.2.",
+      "texto": "¿Las actividades le ayudan a mejorar o mantener sus capacidades físicas y mentales?",
+      "opciones": [
+        "Sí, mucho",
+        "Bastante",
+        "Algo",
+        "Poco"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "escala",
+      "id": "p10",
+      "numero": "4.3.",
+      "texto": "De los siguientes servicios, valore su nivel de satisfacción (0 = nada satisfecho / 10 = muy satisfecho):",
+      "valores": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "extras": [
+        "No usa"
+      ],
+      "filas": [
+        "Transporte",
+        "Atención sanitaria",
+        "Actividad física y fisioterapia",
+        "Terapias (logopedia, ocupacional, psicología)",
+        "Actividades de ocio y convivencia"
+      ],
+      "umbral": 8
+    },
+    {
+      "tipo": "seccion",
+      "id": "s5",
+      "texto": "5. Impacto en su bienestar"
+    },
+    {
+      "tipo": "unica",
+      "id": "p11",
+      "numero": "5.1.",
+      "texto": "Desde que asiste al Centro, ¿cómo considera que ha cambiado su calidad de vida?",
+      "opciones": [
+        "Ha mejorado mucho",
+        "Ha mejorado",
+        "Se mantiene igual",
+        "Ha empeorado"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p12",
+      "numero": "5.2.",
+      "texto": "¿Cómo se siente respecto a su estado de ánimo gracias a venir al Centro?",
+      "opciones": [
+        "Mucho mejor",
+        "Mejor",
+        "Igual",
+        "Peor"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "seccion",
+      "id": "s6",
+      "texto": "6. Valoración global"
+    },
+    {
+      "tipo": "unica",
+      "id": "p13",
+      "numero": "6.1.",
+      "texto": "En general, ¿qué tan satisfecho/a está con el Centro de Día?",
+      "opciones": [
+        "Muy satisfecho/a",
+        "Bastante satisfecho/a",
+        "Poco satisfecho/a",
+        "Nada satisfecho/a"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p14",
+      "numero": "6.2.",
+      "texto": "Si tuviera que recomendar el Centro a otra persona, ¿lo haría?",
+      "opciones": [
+        "Sí, sin duda",
+        "Sí, probablemente",
+        "No estoy seguro/a",
+        "No lo recomendaría"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "escala",
+      "id": "p15",
+      "numero": "6.3.",
+      "texto": "Puntúe de 0 a 10 la calidad global del Centro:",
+      "valores": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "filas": [
+        ""
+      ],
+      "umbral": 8
+    },
+    {
+      "tipo": "seccion",
+      "id": "s7",
+      "texto": "7. Sugerencias y mejoras"
+    },
+    {
+      "tipo": "abierta",
+      "id": "p16",
+      "texto": "Escriba aquí sus sugerencias o propuestas de mejora:",
+      "lineas": 4
+    }
+  ]
+}

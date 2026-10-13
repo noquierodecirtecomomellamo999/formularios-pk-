@@ -1,0 +1,246 @@
+{
+  "formato": "encuesta-omr/1",
+  "id": "cirenc-tratamiento-ambulatorio-2026",
+  "titulo": "Cuestionario de satisfacción del CIRENC",
+  "subtitulo": "Programa Tratamiento Ambulatorio · Año 2026",
+  "introduccion": "Nuestro propósito es ir mejorando cada año la atención que dispensamos en el Centro. Para ello es fundamental que evaluemos nuestro trabajo y conozcamos su opinión sobre distintos aspectos.",
+  "instrucciones": "Marque con una X la casilla de la respuesta elegida, dentro del cuadro. Puede usar bolígrafo o lápiz oscuro. Si se equivoca, rellene por completo la casilla equivocada y marque con una X la correcta.",
+  "mostrar_fecha": true,
+  "cabecera": {
+    "lineas_izquierda": [
+      "Asociación de Parkinson de La Roda CIRENC",
+      "Centro Integral de Rehabilitación de Enfermos Neurológicos Crónicos",
+      "Avda. Mediterráneo, Nº 2 · La Roda, Albacete · CIF: G02337814",
+      "Tel./Fax: 967 440 404 · correo@parkinsonlaroda.com"
+    ],
+    "lineas_derecha": [],
+    "logos": [
+      "logo_asociacion.png"
+    ]
+  },
+  "pie": "www.parkinsonlaroda.com",
+  "despedida": "Muchas gracias por su colaboración",
+  "tamano_letra": 11.0,
+  "elementos": [
+    {
+      "tipo": "unica",
+      "id": "p1",
+      "numero": "1.",
+      "texto": "¿Cómo valora los espacios/zonas en los que está dividido el Centro?",
+      "opciones": [
+        "Muy bien",
+        "Bien",
+        "Regular",
+        "Mal"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p2",
+      "numero": "2.",
+      "texto": "¿Cómo valora el equipamiento que tiene el Centro?",
+      "opciones": [
+        "Muy bien",
+        "Bien",
+        "Regular",
+        "Mal"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p3",
+      "numero": "3.",
+      "texto": "¿Cuál es su opinión sobre la atención que ha recibido por los profesionales del Centro?",
+      "opciones": [
+        "Muy bien",
+        "Bien",
+        "Regular",
+        "Mal"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p4",
+      "numero": "4.",
+      "texto": "¿Cuál es su opinión sobre las actividades que ha realizado en el Centro?",
+      "opciones": [
+        "Muy bien",
+        "Bien",
+        "Regular",
+        "Mal"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "multiple",
+      "id": "p5",
+      "numero": "5.",
+      "texto": "¿Qué tratamiento ambulatorio está recibiendo? (Puede marcar más de una opción)",
+      "opciones": [
+        "Fisioterapia",
+        "Terapia ocupacional",
+        "Psicología",
+        "Logopedia",
+        "Actividad física",
+        "Taller de ocio musical"
+      ]
+    },
+    {
+      "tipo": "abierta",
+      "id": "p6",
+      "numero": "6.",
+      "texto": "¿Le gustaría realizar algún tratamiento que no se esté realizando en la asociación? Diga cuál:",
+      "lineas": 2
+    },
+    {
+      "tipo": "texto",
+      "id": "t1",
+      "numero": "7.",
+      "texto": "Refiriéndonos a cómo se encuentra usted este año en el Centro, señale con una cruz lo que considere más adecuado:"
+    },
+    {
+      "tipo": "unica",
+      "id": "p7",
+      "numero": "a)",
+      "texto": "Respecto a su estado físico:",
+      "opciones": [
+        "Ha mejorado mucho",
+        "Ha mejorado algo",
+        "Está más o menos igual",
+        "Ha empeorado algo",
+        "Ha empeorado mucho"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p8",
+      "numero": "b)",
+      "texto": "Respecto a su estado de ánimo:",
+      "opciones": [
+        "Ha mejorado mucho",
+        "Ha mejorado algo",
+        "Está más o menos igual",
+        "Ha empeorado algo",
+        "Ha empeorado mucho"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p9",
+      "numero": "c)",
+      "texto": "Respecto a su conocimiento sobre la enfermedad que padece:",
+      "opciones": [
+        "Ha mejorado mucho",
+        "Ha mejorado algo",
+        "Está más o menos igual",
+        "No ha mejorado"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "escala",
+      "id": "p10",
+      "numero": "8.",
+      "texto": "Ahora, por favor, valore según su opinión de 0 a 10 los diferentes servicios y tratamientos:",
+      "valores": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "extras": [
+        "No usa"
+      ],
+      "filas": [
+        "Transporte",
+        "Fisioterapia",
+        "Terapia ocupacional",
+        "Logopedia",
+        "Psicología",
+        "Actividad física",
+        "Atención sanitaria"
+      ],
+      "umbral": 8
+    },
+    {
+      "tipo": "unica",
+      "id": "p11",
+      "numero": "9.",
+      "texto": "En general, respecto a su asistencia a este Centro, usted se muestra:",
+      "opciones": [
+        "Muy satisfecho",
+        "Bastante satisfecho",
+        "Satisfecho",
+        "Poco satisfecho",
+        "Nada satisfecho"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "escala",
+      "id": "p12",
+      "numero": "10.",
+      "texto": "Y su valoración global sobre la calidad de la atención que dispensa el Centro la puntuaría con un:",
+      "valores": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "filas": [
+        ""
+      ],
+      "umbral": 8
+    },
+    {
+      "tipo": "abierta",
+      "id": "p13",
+      "numero": "11.",
+      "texto": "Sugerencias para la mejora:",
+      "lineas": 4
+    }
+  ]
+}

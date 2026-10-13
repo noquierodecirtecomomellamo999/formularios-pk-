@@ -1,0 +1,199 @@
+{
+  "formato": "encuesta-omr/1",
+  "id": "cirenc-familiares-2026",
+  "titulo": "Cuestionario de satisfacción para familiares",
+  "subtitulo": "Año 2026",
+  "introduccion": "La siguiente encuesta nos ayudará a mejorar los servicios que ofrecemos. Sus respuestas serán confidenciales. Marque una sola opción en cada pregunta y complete los comentarios que considere.",
+  "instrucciones": "Marque con una X la casilla de la respuesta elegida, dentro del cuadro. Puede usar bolígrafo o lápiz oscuro. Si se equivoca, rellene por completo la casilla equivocada y marque con una X la correcta.",
+  "mostrar_fecha": true,
+  "cabecera": {
+    "lineas_izquierda": [
+      "Asociación de Parkinson de La Roda CIRENC",
+      "Centro Integral de Rehabilitación de Enfermos Neurológicos Crónicos",
+      "Avda. Mediterráneo, Nº 2 · La Roda, Albacete · CIF: G02337814",
+      "Tel./Fax: 967 440 404 · correo@parkinsonlaroda.com"
+    ],
+    "lineas_derecha": [],
+    "logos": [
+      "logo_asociacion.png"
+    ]
+  },
+  "pie": "www.parkinsonlaroda.com",
+  "despedida": "Gracias por su tiempo y colaboración. Sus respuestas son fundamentales para mejorar nuestros servicios.",
+  "tamano_letra": 11.0,
+  "elementos": [
+    {
+      "tipo": "unica",
+      "id": "p1",
+      "numero": "1.",
+      "texto": "¿Qué tan satisfecho/a está con los servicios generales que ofrece la asociación?",
+      "opciones": [
+        "Muy satisfecho/a",
+        "Satisfecho/a",
+        "Neutral",
+        "Insatisfecho/a",
+        "Muy insatisfecho/a"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "escala",
+      "id": "p2",
+      "numero": "2.",
+      "texto": "Califique su satisfacción con los siguientes servicios (1 = muy insatisfecho/a, 5 = muy satisfecho/a):",
+      "valores": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "filas": [
+        "Fisioterapia",
+        "Logopedia",
+        "Terapia ocupacional",
+        "Psicología",
+        "Trabajo social",
+        "Atención médica",
+        "Transporte adaptado"
+      ],
+      "umbral": 4
+    },
+    {
+      "tipo": "unica",
+      "id": "p3",
+      "numero": "3.",
+      "texto": "¿Considera que su carga emocional y física ha disminuido desde que su familiar asiste al centro?",
+      "opciones": [
+        "Sí, mucho",
+        "Sí, en algo",
+        "No ha cambiado",
+        "Ha aumentado"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p4",
+      "numero": "4.",
+      "texto": "¿Le parece que los horarios y tiempos de atención en el centro son adecuados para las necesidades de su familiar?",
+      "opciones": [
+        "Sí",
+        "En parte",
+        "No"
+      ],
+      "favorables": [
+        0
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p5",
+      "numero": "5.",
+      "texto": "¿Percibe que su familiar está mejorando en su bienestar y autonomía personal desde que asiste al centro?",
+      "opciones": [
+        "Sí, ha mejorado mucho",
+        "Ha mejorado un poco",
+        "No ha notado cambios",
+        "Ha empeorado"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p6",
+      "numero": "6.",
+      "texto": "¿Cómo calificaría la comunicación del equipo del centro con usted y su familia?",
+      "opciones": [
+        "Excelente",
+        "Buena",
+        "Regular",
+        "Insuficiente"
+      ],
+      "favorables": [
+        0,
+        1
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p7",
+      "numero": "7.",
+      "texto": "¿Tiene más información sobre la enfermedad de su familiar y de cómo tratarlo desde que su familiar asiste al centro?",
+      "opciones": [
+        "Sí",
+        "Igual",
+        "No"
+      ],
+      "favorables": [
+        0
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p8",
+      "numero": "8.",
+      "texto": "¿Hay algún servicio adicional o mejora que le gustaría que incluyera el centro?",
+      "opciones": [
+        "Sí (por favor, especifique):",
+        "No"
+      ],
+      "con_texto": [
+        0
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p9",
+      "numero": "9.",
+      "texto": "¿Ha participado en las charlas de formación que ofrece el centro?",
+      "opciones": [
+        "Sí",
+        "No"
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p10",
+      "numero": "10.",
+      "texto": "¿Le han resultado interesantes estas formaciones? ¿Considera que ha aprendido sobre el tema tratado?",
+      "opciones": [
+        "Sí, he aprendido mucho",
+        "Igual, eran cosas que ya sabía",
+        "No, no me ha resultado nada interesante"
+      ],
+      "favorables": [
+        0
+      ]
+    },
+    {
+      "tipo": "unica",
+      "id": "p11",
+      "numero": "11.",
+      "texto": "¿Le gustaría tratar algún tema en particular en las formaciones futuras?",
+      "opciones": [
+        "Sí, ¿cuál?:",
+        "No"
+      ],
+      "con_texto": [
+        0
+      ]
+    },
+    {
+      "tipo": "abierta",
+      "id": "p12",
+      "numero": "12.",
+      "texto": "Comentarios adicionales o sugerencias:",
+      "lineas": 4
+    }
+  ]
+}

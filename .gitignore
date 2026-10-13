@@ -1,0 +1,14 @@
+# Entorno de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Datos de trabajo del programa (encuestas, escaneos, resultados)
+datos/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
