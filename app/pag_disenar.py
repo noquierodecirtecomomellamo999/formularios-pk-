@@ -226,7 +226,7 @@ def _editor_elemento(eid: str, e: Elemento, i: int, total: int) -> Elemento:
             clave = iniciar(_k(eid, e, "con_texto"), list(e.con_texto))
             st.session_state[clave] = [k for k in st.session_state[clave] if k in indices]
             n.con_texto = c2.multiselect("Con línea para escribir («especifique»)", indices, key=clave,
-                                         format_func=lambda k: n.opciones[k])
+                                         format_func=lambda k: n.opciones[k], placeholder="Elige…")
             n.favorables = [k for k in e.favorables if k < len(n.opciones)]
         elif e.tipo == "escala":
             c1, c2 = st.columns([3, 2])

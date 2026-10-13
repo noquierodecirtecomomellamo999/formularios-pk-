@@ -84,12 +84,25 @@ def quesito(etiquetas: list[str], valores: list[int], colores: list[str], ruta: 
     fig, ax = plt.subplots(figsize=(ANCHO_IN, 2.5))
     cuñas, _ = ax.pie([v for _, v, _ in datos], colors=[c for _, _, c in datos], startangle=90, counterclock=False,
                       wedgeprops={"linewidth": 2, "edgecolor": "white"}, radius=1.0)
-    for cuña, (_, v, c) in zip(cuñas, datos):
+    # Porcentaje dentro de la porción solo si cabe y no choca con otro (de mayor a menor porción);
+    # el valor siempre está en la leyenda y en la tabla.
+    etiquetas = []
+    for cuña, (_, v, c) in sorted(zip(cuñas, datos), key=lambda x: -x[1][1]):
         p = 100 * v / total
-        if p >= 7:  # solo se rotula dentro si cabe
-            ang = (cuña.theta1 + cuña.theta2) / 2
-            x, y = 0.62 * math.cos(math.radians(ang)), 0.62 * math.sin(math.radians(ang))
-            ax.text(x, y, pct(p), ha="center", va="center", fontsize=8.5, color=_texto_sobre(c), fontweight="bold")
+        if p < 8:
+            continue
+        ang = math.radians((cuña.theta1 + cuña.theta2) / 2)
+        texto = ax.text(0.64 * math.cos(ang), 0.64 * math.sin(ang), pct(p), ha="center", va="center", fontsize=8,
+                        color=_texto_sobre(c), fontweight="bold")
+        etiquetas.append(texto)
+    fig.canvas.draw()
+    colocadas = []
+    for texto in etiquetas:
+        caja = texto.get_window_extent().expanded(1.35, 1.4)
+        if any(caja.overlaps(otra) for otra in colocadas):
+            texto.remove()
+        else:
+            colocadas.append(caja)
     ax.set_aspect("equal")
     leyenda = [Patch(facecolor=c, edgecolor="none", label=f"{_corto(e)}  ·  {v} ({pct(100 * v / total)})")
                for e, v, c in datos]

@@ -66,7 +66,7 @@ def tabla_resumen(resumenes) -> pd.DataFrame:
                 filas.append({"Pregunta": preg, "Respuesta": fe.etiqueta, "Personas": fe.n,
                               "Media": round(fe.media, 2) if fe.media is not None else None,
                               "Mediana": fe.mediana,
-                              f"% ≥ umbral": round(fe.pct_umbral, 1) if fe.pct_umbral is not None else None,
+                              "% ≥ umbral": round(fe.pct_umbral, 1) if fe.pct_umbral is not None else None,
                               "No puntuables (No usa…)": fe.n_extras})
         elif e.tipo == "numero":
             filas.append({"Pregunta": preg, "Respuesta": "valores", "Personas": len(r.numeros),

@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 
 import comun
+from encuestas_omr.lector import TINTA_VACIA
 from encuestas_omr.recortes import recorte_pregunta, recorte_texto
 from encuestas_omr.resultados import clave_revision, clave_texto, consolidar
 
@@ -68,6 +69,13 @@ def _guardar_descartados(eid, clave_widget):
     alm.guardar_revisiones(eid, rev)
 
 
+def _sugerencia(campo):
+    """Para marcas débiles sin respuesta clara: la casilla con más tinta (solo como propuesta)."""
+    if campo.seleccion or not campo.tinta or max(campo.tinta) < TINTA_VACIA:
+        return None
+    return max(range(len(campo.tinta)), key=lambda k: campo.tinta[k])
+
+
 def _campo_maqueta(alm, eid, item):
     m = alm.maqueta(eid, item.ref.resultado.huella)
     if not m:
@@ -119,9 +127,10 @@ def _tab_dudas(alm, eid, enc, cons):
             if multiple:
                 comun.iniciar(kw, list(actual))
                 cc.multiselect("Opciones marcadas", list(range(len(opciones))), key=kw,
-                               format_func=lambda k: opciones[k])
+                               format_func=lambda k: opciones[k], placeholder="Elige…")
             else:
-                comun.iniciar(kw, actual[0] if len(actual) == 1 else (SIN_RESPUESTA if revisado else None))
+                comun.iniciar(kw, actual[0] if len(actual) == 1 else (SIN_RESPUESTA if revisado else
+                                                                       _sugerencia(campo)))
                 cc.radio("Respuesta correcta", [SIN_RESPUESTA] + list(range(len(opciones))), key=kw,
                          format_func=lambda k: "— Sin respuesta / no se puede saber —" if k == SIN_RESPUESTA
                          else opciones[k], horizontal=len(opciones) > 6)
@@ -196,7 +205,7 @@ def _tab_cuestionarios(alm, eid, enc, cons):
     kw = f"desc:{eid}"
     comun.iniciar(kw, [x for x in cons.descartados if x in ids])
     st.multiselect("Cuestionarios que NO deben contar en los resultados (hojas de prueba, rellenadas por error…)",
-                   ids, key=kw, on_change=_guardar_descartados, args=(eid, kw))
+                   ids, key=kw, on_change=_guardar_descartados, args=(eid, kw), placeholder="Elige…")
     elegido = st.selectbox("Ver las hojas de un cuestionario", [""] + ids, format_func=lambda x: x or "—")
     if elegido:
         c = next(x for x in cons.cuestionarios if x.id == elegido)

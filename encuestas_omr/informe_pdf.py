@@ -19,6 +19,8 @@ from reportlab.platypus import (Image, KeepTogether, ListFlowable, ListItem, Pag
                                 SimpleDocTemplate, Spacer, Table, TableStyle)
 from xml.sax.saxutils import escape
 
+from PIL import Image as PILImage
+
 from . import fuentes, graficos
 from .almacen import Almacen
 from .analisis import ResumenPregunta, conclusiones_automaticas, num, pct, resumir
@@ -217,8 +219,6 @@ def generar_informe(almacen: Almacen, encuesta_id: str, destino: Path, textos: d
             continue
         img = graficos.grafico(r, tmp / f"{e.id}.png", elegidos.get(e.id))
         if img:
-            from PIL import Image as PILImage
-
             with PILImage.open(img) as im:
                 w, h = im.size
             ancho = min(160 * mm, w / 200 * 25.4 * mm)
@@ -294,8 +294,6 @@ def generar_informe(almacen: Almacen, encuesta_id: str, destino: Path, textos: d
             y -= 3.4 * mm
         x = 192 * mm
         for logo in reversed(logos):
-            from PIL import Image as PILImage
-
             with PILImage.open(logo) as im:
                 w, h = im.size
             alto = 14 * mm

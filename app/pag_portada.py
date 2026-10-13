@@ -21,7 +21,7 @@ def pagina():
     for col, (ruta, icono, titulo, texto) in zip(cols, pasos):
         with col:
             with st.container(border=True):
-                st.page_link(comun.PAGINAS[ruta], label=f"**{titulo}**", icon=icono)
+                st.page_link(comun.PAGINAS[ruta], label=titulo, icon=icono, width="stretch")
                 st.caption(texto)
 
     activa = comun.encuesta_activa()

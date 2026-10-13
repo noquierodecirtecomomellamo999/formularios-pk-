@@ -24,7 +24,7 @@ def cargar_ejemplo(nombre: str) -> Encuesta:
 
 @pytest.fixture
 def almacen(tmp_path) -> Almacen:
-    alm = Almacen(tmp_path / "datos")
+    alm = Almacen(tmp_path / "Datos de José (señal)")  # rutas con tildes, como en Windows
     alm.instalar_ejemplos()
     return alm
 

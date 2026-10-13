@@ -9,7 +9,7 @@ import streamlit as st
 
 import comun
 from encuestas_omr import graficos
-from encuestas_omr.analisis import conclusiones_automaticas, num, pct, resumir
+from encuestas_omr.analisis import num, pct, resumir
 from encuestas_omr.exportar import exportar_excel
 from encuestas_omr.informe_pdf import generar_informe, textos_por_defecto
 from encuestas_omr.modelo import GRAFICOS
@@ -132,7 +132,7 @@ def _bloque_pregunta(alm, eid, r, frases_editadas):
                 comun.iniciar(kf, [k for k in e.favorables if k < len(e.opciones)])
                 st.multiselect("Respuestas favorables (para la frase de resumen)", list(range(len(e.opciones))),
                                key=kf, format_func=lambda k: e.opciones[k],
-                               on_change=_guardar_en_encuesta, args=(eid, e.id, "favorables", kf))
+                               on_change=_guardar_en_encuesta, args=(eid, e.id, "favorables", kf), placeholder="Elige…")
             if e.tipo == "escala":
                 ku = f"umb:{eid}:{e.id}"
                 comun.iniciar(ku, float(r.umbral) if r.umbral is not None else 0.0)

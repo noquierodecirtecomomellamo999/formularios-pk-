@@ -57,7 +57,8 @@ def procesar_lote(almacen: Almacen, encuesta_id: str, lote: str,
                 res, normal = ResultadoPagina(origen=descripcion, error=f"Error inesperado al leer: {e}"), None
             nombre = f"{n:04d}.jpg"
             imagen = normal if normal is not None else _miniatura(gris)
-            cv2.imwrite(str(dir_paginas / nombre), imagen, [cv2.IMWRITE_JPEG_QUALITY, 82])
+            ok, datos = cv2.imencode(".jpg", imagen, [cv2.IMWRITE_JPEG_QUALITY, 82])
+            datos.tofile(str(dir_paginas / nombre))  # (cv2.imwrite falla con rutas con tildes en Windows)
             res.imagen = f"paginas/{nombre}"
             if res.error and res.huella and not res.campos:
                 otra = almacen.buscar_maqueta(res.huella)
