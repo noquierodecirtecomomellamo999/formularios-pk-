@@ -73,6 +73,9 @@ def instalar_librerias(destino: Path) -> None:
                            "--no-warn-script-location", "--target", str(site), "-r", str(RAIZ / "requirements.txt")])
     # Ejecutables de consola que no hacen falta (el programa se abre con el lanzador)
     shutil.rmtree(site / "bin", ignore_errors=True)
+    # Plantillas de Streamlit para asistentes de IA: no se usan y son las rutas más largas
+    # (riesgo con el límite de 260 caracteres de Windows)
+    shutil.rmtree(site / "streamlit" / ".agents", ignore_errors=True)
 
 
 def copiar_programa(destino: Path) -> None:

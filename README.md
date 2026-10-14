@@ -42,10 +42,16 @@ Se descomprime y se abre con «Abrir Encuestas CIRENC.bat».
 
 ### Instalar desde el código (para quien vaya a modificar el programa)
 
+Para usar el programa no hace falta: es más fácil el instalador de arriba.
+
 1. **Instala Python** 3.10 o posterior desde <https://www.python.org/downloads/>, marcando **«Add python.exe to PATH»**.
 2. Descarga el código: en GitHub, *Code → Download ZIP*, y descomprímelo.
-3. Haz doble clic en **`instalar.bat`**. La primera vez tarda unos minutos.
+3. Haz doble clic en **`instalar.bat`**. La primera vez tarda unos minutos y necesita internet.
 4. Ábrelo con **`iniciar.bat`**.
+
+`instalar.bat` crea el entorno de Python en `%LOCALAPPDATA%\Encuestas CIRENC\entorno` y no dentro de la
+carpeta del programa. Así funciona aunque esa carpeta tenga una ruta muy larga: Windows no admite rutas de
+más de 260 caracteres, y al descomprimir el ZIP la carpeta suele quedar repetida dentro de sí misma.
 
 > En Linux o macOS: `./iniciar.sh`.
 

@@ -32,3 +32,60 @@ jobs:
           done
           cat streamlit.log
           exit 1
+
+  instalar-bat:
+    # Instalación desde el código con instalar.bat, como quien descarga el ZIP de GitHub y lo
+    # descomprime en el escritorio: la carpeta queda repetida y la ruta es muy larga. Se desactivan
+    # las rutas largas de Windows (vienen desactivadas en un ordenador normal).
+    runs-on: windows-latest
+    env:
+      CARPETA: formularios-pk--claude-survey-automation-omr-aii715/formularios-pk--claude-survey-automation-omr-aii715
+    steps:
+      - name: Desactivar las rutas largas de Windows
+        shell: pwsh
+        run: Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name LongPathsEnabled -Value 0
+      - name: Comprobar que están desactivadas (si no, la prueba no serviría)
+        shell: python
+        run: |
+          import os, sys
+          carpeta = os.path.join(os.environ["RUNNER_TEMP"], "x" * 200)
+          os.makedirs(carpeta, exist_ok=True)
+          try:
+              open(os.path.join(carpeta, "y" * 100), "w").close()  # ruta de más de 260 caracteres
+          except OSError:
+              print("Rutas largas desactivadas")
+          else:
+              sys.exit("Las rutas largas siguen activadas")
+      - uses: actions/checkout@v5
+        with:
+          path: ${{ env.CARPETA }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Instalar con instalar.bat
+        shell: cmd
+        working-directory: ${{ env.CARPETA }}
+        run: |
+          call instalar.bat < nul
+          if not exist "%LOCALAPPDATA%\Encuestas CIRENC\entorno\listo.txt" exit /b 1
+      - name: Probar el proceso completo con el entorno instalado
+        shell: cmd
+        working-directory: ${{ env.CARPETA }}
+        env:
+          PYTHONPATH: .
+        run: '"%LOCALAPPDATA%\Encuestas CIRENC\entorno\Scripts\python.exe" instalador\prueba_paquete.py'
+      - name: Abrir con iniciar.bat (sin volver a instalar)
+        shell: pwsh
+        working-directory: ${{ env.CARPETA }}
+        run: |
+          New-Item vacio.txt -ItemType File | Out-Null
+          Start-Process cmd -ArgumentList "/c","iniciar.bat" -RedirectStandardInput vacio.txt -RedirectStandardOutput iniciar.log
+          $ok = $false
+          for ($i = 0; $i -lt 60; $i++) {
+            try { if ((Invoke-WebRequest "http://127.0.0.1:8501/_stcore/health" -UseBasicParsing -TimeoutSec 3).StatusCode -eq 200) { $ok = $true; break } } catch {}
+            Start-Sleep 2
+          }
+          Get-Content iniciar.log
+          if (-not $ok) { throw "El programa no responde" }
+          if (Select-String -Path iniciar.log -Pattern "Instalando" -Quiet) { throw "iniciar.bat ha vuelto a instalar sin hacer falta" }
+          Write-Host "El programa se abre y responde"
