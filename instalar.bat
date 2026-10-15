@@ -50,13 +50,19 @@ exit /b 0
 exit /b %errorlevel%
 
 :sin_python
-echo  No se encuentra Python 3.10 o posterior en este ordenador.
-echo  1. Descarga la última versión de https://www.python.org/downloads/
-echo  2. Al instalarlo, marca la casilla "Add python.exe to PATH".
-echo  3. Vuelve a hacer doble clic en este archivo.
+echo  Este archivo es para instalar el programa desde el código y necesita Python 3.10
+echo  o posterior, que no está en este ordenador.
 echo.
-echo  Más fácil: usa el instalador, que ya lo lleva todo dentro (Python incluido):
+echo  Lo normal es usar el instalador «Instalar-Encuestas-CIRENC.exe», que ya lo lleva
+echo  todo dentro (Python incluido) y no necesita nada más:
 echo  https://github.com/noquierodecirtecomomellamo999/formularios-pk-/releases/latest/download/Instalar-Encuestas-CIRENC.exe
+echo.
+choice /c SN /n /m "¿Descargar ahora el instalador? (S/N) "
+if errorlevel 2 exit /b 1
+start "" "https://github.com/noquierodecirtecomomellamo999/formularios-pk-/releases/latest/download/Instalar-Encuestas-CIRENC.exe"
+echo.
+echo  Cuando termine la descarga, abre «Instalar-Encuestas-CIRENC.exe».
+echo  La carpeta donde está este archivo ya no hace falta: la puedes borrar.
 echo.
 pause
 exit /b 1
